@@ -1,0 +1,167 @@
+.codeflow-block {
+  --codeflow-guide-color: var(--background-modifier-border);
+  --codeflow-panel-color: var(--background-primary-alt);
+  --codeflow-hover-color: color-mix(in srgb, var(--interactive-accent) 6%, transparent);
+  --codeflow-toggle-color: color-mix(in srgb, var(--text-faint) 82%, transparent);
+  --codeflow-toggle-hover-color: var(--text-muted);
+  --codeflow-token-keyword: var(--text-accent);
+  --codeflow-token-path: var(--text-muted);
+  --codeflow-token-function: var(--color-cyan);
+  --codeflow-token-strong: var(--color-orange);
+  --codeflow-token-emphasis: var(--text-accent);
+  --codeflow-token-highlight: var(--text-normal);
+  --codeflow-token-strikethrough: var(--text-faint);
+  --codeflow-token-comment: var(--text-faint);
+  --codeflow-token-scope: var(--text-faint);
+  --codeflow-token-bullet: var(--text-accent-hover);
+  margin: 0.75rem 0;
+  padding: 0.65rem 0.8rem;
+  background: var(--codeflow-panel-color);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.codeflow-tree,
+.codeflow-children {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+}
+
+.codeflow-node {
+  position: relative;
+}
+
+.codeflow-line-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.24rem;
+}
+
+.codeflow-line {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  font-family: var(--font-monospace);
+  font-size: 0.92em;
+  line-height: 1.35;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.codeflow-toggle,
+.codeflow-toggle-spacer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.82rem;
+  min-width: 0.82rem;
+  height: 0.82rem;
+  min-height: 0.82rem;
+  margin-top: 0.12rem;
+}
+
+.codeflow-toggle {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0;
+  color: var(--codeflow-toggle-color);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  border-radius: 3px;
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.28;
+  transition: color 120ms ease, background-color 120ms ease, opacity 120ms ease;
+}
+
+.codeflow-line-row:hover > .codeflow-toggle,
+.codeflow-node:focus-within > .codeflow-line-row > .codeflow-toggle,
+.codeflow-toggle:hover {
+  opacity: 0.72;
+  color: var(--codeflow-toggle-hover-color);
+  background: var(--codeflow-hover-color);
+}
+
+.codeflow-toggle:focus-visible {
+  outline: 2px solid var(--interactive-accent);
+  outline-offset: 1px;
+}
+
+.codeflow-toggle .svg-icon {
+  width: 0.66rem;
+  height: 0.66rem;
+  stroke-width: 2.25px;
+}
+
+.codeflow-children {
+  margin-top: 0.04rem;
+  margin-left: 0.5rem;
+  padding-left: 0.7rem;
+  border-left: 1px solid var(--codeflow-guide-color);
+}
+
+.codeflow-node.is-collapsed > .codeflow-children {
+  display: none;
+}
+
+.codeflow-node.is-collapsed > .codeflow-line-row > .codeflow-line {
+  opacity: 0.92;
+}
+
+.codeflow-node-comment > .codeflow-line-row > .codeflow-line {
+  opacity: 0.9;
+}
+
+.codeflow-node-branch > .codeflow-line-row > .codeflow-line,
+.codeflow-node-loop > .codeflow-line-row > .codeflow-line {
+  font-weight: 500;
+}
+
+.codeflow-token-bullet {
+  color: var(--codeflow-token-bullet);
+}
+
+.codeflow-token-keyword {
+  color: var(--codeflow-token-keyword);
+}
+
+.codeflow-token-path {
+  color: var(--codeflow-token-path);
+}
+
+.codeflow-token-scope {
+  color: var(--codeflow-token-scope);
+}
+
+.codeflow-token-function {
+  color: var(--codeflow-token-function);
+}
+
+.codeflow-token-strong {
+  color: var(--codeflow-token-strong);
+  font-weight: 700;
+}
+
+.codeflow-token-emphasis {
+  color: var(--codeflow-token-emphasis);
+  font-style: italic;
+}
+
+.codeflow-token-highlight {
+  padding: 0 0.16rem;
+  color: var(--codeflow-token-highlight);
+  background: color-mix(in srgb, var(--text-accent) 22%, transparent);
+  border-radius: 4px;
+}
+
+.codeflow-token-strikethrough {
+  color: var(--codeflow-token-strikethrough);
+  text-decoration: line-through;
+}
+
+.codeflow-token-comment {
+  color: var(--codeflow-token-comment);
+}

@@ -1,0 +1,20 @@
+{
+    "name":  "obsidian-codeflow",
+    "version":  "0.1.0",
+    "description":  "Obsidian plugin for rendering and highlighting codeflow code blocks.",
+    "license":  "MIT",
+    "type":  "module",
+    "scripts":  {
+                    "build":  "node esbuild.config.mjs production",
+                    "dev":  "node esbuild.config.mjs",
+                    "package":  "powershell.exe -ExecutionPolicy Bypass -File scripts/package-release.ps1"
+                },
+    "devDependencies":  {
+                            "@codemirror/lang-markdown":  "^6.5.0",
+                            "@codemirror/language":  "^6.12.2",
+                            "@types/node":  "^24.6.0",
+                            "esbuild":  "^0.27.3",
+                            "obsidian":  "^1.12.3",
+                            "typescript":  "^5.9.3"
+                        }
+}

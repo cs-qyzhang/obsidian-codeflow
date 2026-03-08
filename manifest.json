@@ -1,0 +1,9 @@
+{
+  "id": "obsidian-codeflow",
+  "name": "Codeflow",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Render and highlight codeflow call-tree pseudocode blocks.",
+  "author": "OpenAI Codex",
+  "isDesktopOnly": false
+}
