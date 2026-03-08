@@ -2,9 +2,10 @@ import type { Extension } from "@codemirror/state";
 import { LanguageDescription, LanguageSupport, StreamLanguage } from "@codemirror/language";
 import { markdownLanguage } from "@codemirror/lang-markdown";
 
-import { CODEFLOW_KEYWORDS } from "./codeflow-parser";
+import { CODEFLOW_KEYWORDS, isCommentBoundary } from "./codeflow-parser";
 
 const keywordSet = new Set(CODEFLOW_KEYWORDS);
+const PATH_PATTERN = /^(?:(?:[A-Za-z0-9_.-]+\/)+(?:[A-Za-z0-9_.-]+)|(?:[A-Za-z0-9_.-]+\.[A-Za-z0-9_.-]+)(?=::))/;
 
 const codeflowLanguage = StreamLanguage.define({
   startState() {
@@ -12,11 +13,14 @@ const codeflowLanguage = StreamLanguage.define({
   },
 
   token(stream) {
-    if (stream.sol() && stream.match("- ")) {
-      return "operator";
+    if (stream.sol()) {
+      stream.eatSpace();
+      if (stream.match("- ")) {
+        return "operator";
+      }
     }
 
-    if (stream.peek() === "#") {
+    if (matchesComment(stream)) {
       stream.skipToEnd();
       return "comment";
     }
@@ -41,7 +45,7 @@ const codeflowLanguage = StreamLanguage.define({
       return "keyword";
     }
 
-    if (stream.match(/^(?:[A-Za-z0-9_.-]+\/)+(?:[A-Za-z0-9_.-]+)/)) {
+    if (stream.match(PATH_PATTERN)) {
       return "string";
     }
 
@@ -107,4 +111,12 @@ function matchesKeyword(stream: {
   }
 
   return stream.match(/^(if|elif|else|for|in|while)\b/) !== null;
+}
+
+function matchesComment(stream: {
+  peek: () => string | undefined;
+  string: string;
+  pos: number;
+}): boolean {
+  return stream.peek() === "#" && isCommentBoundary(stream.string, stream.pos);
 }

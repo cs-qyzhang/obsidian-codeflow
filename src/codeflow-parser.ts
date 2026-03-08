@@ -40,7 +40,7 @@ interface InlineMarkdownMatch {
 
 const KEYWORDS = ["if", "elif", "else", "for", "in", "while"];
 const KEYWORD_PATTERN = /^(if|elif|else|for|in|while)\b/;
-const PATH_PATTERN = /^(?:[A-Za-z0-9_.-]+\/)+(?:[A-Za-z0-9_.-]+)/;
+const PATH_PATTERN = /^(?:(?:[A-Za-z0-9_.-]+\/)+(?:[A-Za-z0-9_.-]+)|(?:[A-Za-z0-9_.-]+\.[A-Za-z0-9_.-]+)(?=::))/;
 const IDENTIFIER_PATTERN = /^[A-Za-z_][\w.]*/;
 
 export function parseCodeflow(source: string): CodeflowNode[] {
@@ -195,6 +195,10 @@ function findCommentStart(line: string): number {
   }
 
   return -1;
+}
+
+export function isCommentBoundary(line: string, index: number): boolean {
+  return index === 0 || /\s/.test(line[index - 1]);
 }
 
 function matchInlineMarkdown(line: string, index: number): InlineMarkdownMatch | null {
